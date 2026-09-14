@@ -105,7 +105,8 @@
           <h2 class="contact-subheading">Или оставьте заявку</h2>
           <p class="form-desc">Я свяжусь с вами в течение 2–3 часов для уточнения деталей.</p>
           
-          <form id="contactForm" class="contact-form">
+          <!-- ЗАМЕНИТЕ ЭТУ СТРОКУ -->
+          <form id="contactForm" class="contact-form" action="/api/send-brief" method="POST">
             <div class="form-row">
               <input type="text" name="name" placeholder="Ваше Имя" required>
             </div>
@@ -115,6 +116,7 @@
             <div class="form-row">
               <select name="service_type" required>
                 <option value="" disabled selected>Что вас интересует?</option>
+				<option value="management">Операционное шефство / Ведение бара</option>
                 <option value="menu">Разработка меню & Техкарт</option>
                 <option value="audit">Аудит & Оптимизация</option>
                 <option value="turnkey">Запуск под ключ</option>

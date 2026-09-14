@@ -997,3 +997,43 @@ h1, h2, h3, h4, .brand-logo {
     font-size: 0.95rem;
   }
 }
+/* Выделение комплексного шефства */
+.highlighted-service {
+  border-color: var(--accent) !important;
+  background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(229, 62, 62, 0.03) 100%);
+}
+
+.service-meta-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  background: var(--bg-surface-elevated);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  margin-top: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.service-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.service-meta-item .meta-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.service-meta-item .meta-val {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .service-meta-box {
+    grid-template-columns: 1fr;
+  }
+}

@@ -22,6 +22,7 @@ module.exports = async function handler(req, res) {
 
   // Расшифровка типа услуги на русский язык
   const servicesMap = {
+	management: 'Операционное шефство / Ведение бара',
     menu: 'Разработка меню & Техкарт',
     audit: 'Аудит & Оптимизация расходов',
     turnkey: 'Запуск бара «Под ключ»',
