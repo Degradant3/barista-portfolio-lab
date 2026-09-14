@@ -1,60 +1,65 @@
-// barista-portfolio/api/send-brief.js (Serverless Function)
-const axios = require('axios'); // Нам понадобится библиотека axios для запросов (её нужно будет установить в папку проекта)
+const axios = require('axios');
 
-export default async function handler(req, res) {
-  // 1. Разрешаем только POST запросы
+module.exports = async function handler(req, res) {
+  // Разрешаем только POST запросы
   if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, message: 'Only POST allowed' });
+    return res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
 
-  // 2. Получаем данные из запроса
-  const { name, contact_info, service_type, message } = req.body;
+  const { name, contact_info, service_type, message } = req.body || {};
 
-  // Базовая валидация (защита от пустых спам-заявок)
+  // Валидация обязательных полей
   if (!name || !contact_info || !service_type) {
-    return res.status(400).json({ success: false, message: 'Name, contact, and service type are required.' });
+    return res.status(400).json({ success: false, message: 'Заполните обязательные поля' });
   }
 
-  // 3. Получаем секретные данные из переменных окружения
-  const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-  const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
 
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-    console.error('Missing Telegram Environment Variables');
-    return res.status(500).json({ success: false, message: 'Server configuration error.' });
+  if (!token || !chatId) {
+    return res.status(500).json({ success: false, message: 'Ошибка переменных окружения на сервере' });
   }
 
-  // 4. Форматируем сообщение для Телеграма (MarkdownV2)
-  const textMessage = `
-🔔 *НОВАЯ ЗАЯВКА НА БРИФ* // ${new Date().toLocaleString('ru-RU')}
+  // Расшифровка типа услуги на русский язык
+  const servicesMap = {
+    menu: 'Разработка меню & Техкарт',
+    audit: 'Аудит & Оптимизация расходов',
+    turnkey: 'Запуск бара «Под ключ»',
+    training: 'Обучение персонала & Регламенты',
+    other: 'Другое / Консультация'
+  };
 
-*От кого:* \`${name.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')}\`
-*Контакт:* \`${contact_info.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')}\`
-*Тип проекта:* \`${service_type.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')}\`
-*Сообщение:* \`${(message || 'Нет сообщения').replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')}\`
+  const selectedService = servicesMap[service_type] || service_type;
 
-Specialty Barista Lab // Rasul Aliev
-  `;
+  // Экранирование HTML тегов для безопасности Telegram
+  const clean = (str) => String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  // 5. Отправляем запрос в Телеграм API
-  const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+  const text = `🔔 <b>НОВАЯ ЗАЯВКА С САЙТА</b>\n\n` +
+               `👤 <b>Имя:</b> ${clean(name)}\n` +
+               `📞 <b>Связь:</b> ${clean(contact_info)}\n` +
+               `📋 <b>Услуга:</b> ${clean(selectedService)}\n` +
+               `💬 <b>Задача:</b> ${clean(message || 'Не указана')}\n\n` +
+               `<i>Specialty Barista Lab // Расул Алиев</i>`;
 
   try {
+    const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
     const response = await axios.post(telegramUrl, {
-      chat_id: TELEGRAM_CHAT_ID,
-      text: textMessage,
-      parse_mode: 'MarkdownV2'
+      chat_id: chatId,
+      text: text,
+      parse_mode: 'HTML'
     });
 
-    if (response.data.ok) {
-      // 6. Успешный ответ
-      return res.status(200).json({ success: true, message: 'Brief sent successfully to Telegram!' });
+    if (response.data && response.data.ok) {
+      return res.status(200).json({ success: true });
     } else {
-      console.error('Telegram API Error:', response.data);
-      return res.status(500).json({ success: false, message: 'Error sending message to Telegram.' });
+      return res.status(500).json({ success: false, error: response.data });
     }
   } catch (error) {
-    console.error('Axios Error:', error.message);
-    return res.status(500).json({ success: false, message: 'A network error occurred.' });
+    console.error('Telegram Send Error:', error.response?.data || error.message);
+    return res.status(500).json({ 
+      success: false, 
+      message: error.message, 
+      details: error.response?.data 
+    });
   }
-}
+};
