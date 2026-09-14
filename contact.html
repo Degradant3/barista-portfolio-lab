@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты | Расул Алиев — Шеф-бариста & Барный инженер</title>
+  <meta name="description" content="Свяжитесь с шеф-бариста Расулом Алиевым напрямую через Telegram или WhatsApp для обсуждения проектов в Махачкале, Каспийске или выезда по Дагестану.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/theme-dark.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        РАСУЛ АЛИЕВ<span>/LAB</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="services.html" class="nav-link">Услуги</a>
+        <a href="projects.html" class="nav-link">Проекты</a>
+        <a href="about.html" class="nav-link">Обо мне</a>
+        <a href="contact.html" class="nav-link active">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Contact Hero -->
+    <section class="section-spacing" style="padding-bottom: 20px;">
+      <div class="container">
+        <span class="badge">Обратная связь</span>
+        <h1 class="section-title" style="font-size: 3rem; margin-bottom: 16px;">Обсудим ваш проект</h1>
+        <p class="section-desc" style="max-width: 680px; font-size: 1.15rem;">
+          Самый быстрый способ получить консультацию или договориться о встрече — написать мне напрямую в Telegram или WhatsApp. Я всегда на связи.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Grid -->
+    <section class="section-spacing" style="padding-top: 20px;">
+      <div class="container contact-grid">
+        
+        <!-- Левая колонка: Прямые ссылки & Условия выезда -->
+        <div class="contact-info">
+          <h2 class="contact-subheading">Напишите мне напрямую</h2>
+          
+          <div class="contact-links-stack">
+            <!-- Telegram: deep link -->
+            <a href="https://t.me/Rasul_0_0" target="_blank" rel="noopener noreferrer" class="contact-link-block tg-link">
+              <span class="link-icon">TG</span>
+              <div class="link-text">
+                <span class="link-label">Написать в Telegram</span>
+                <span class="link-val">@Rasul_0_0</span>
+              </div>
+            </a>
+
+            <!-- WhatsApp: deep link (номер без пробелов/тире) -->
+            <a href="https://wa.me/79894975652" target="_blank" rel="noopener noreferrer" class="contact-link-block wa-link">
+              <span class="link-icon">WA</span>
+              <div class="link-text">
+                <span class="link-label">Написать в WhatsApp</span>
+                <span class="link-val">+7 (989) 497-56-52</span>
+              </div>
+            </a>
+
+            <!-- Email: mailto link -->
+            <a href="mailto:rasulaliev675@gmail.com" class="contact-link-block email-link">
+              <span class="link-icon">@</span>
+              <div class="link-text">
+                <span class="link-label">Отправить Email</span>
+                <span class="link-val">rasulaliev675@gmail.com</span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Условия географии (UX: Прозрачность) -->
+          <div class="geography-box">
+            <h3 class="geo-title">География работы & Условия выезда</h3>
+            <p><strong>База:</strong> Махачкала / Каспийск.</p>
+            <p>Возможен выезд во все города Республики Дагестан. Для выездных проектов действуют следующие условия:</p>
+            <ul class="geo-conditions">
+              <li>Оплачиваемое проживание и питание шефа в период работы.</li>
+              <li>Стоимость работ может корректироваться с учетом логистики и времени в пути.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Правая колонка: Форма Брифа -->
+        <div class="contact-form-wrapper">
+          <h2 class="contact-subheading">Или оставьте заявку</h2>
+          <p class="form-desc">Я свяжусь с вами в течение 2–3 часов для уточнения деталей.</p>
+          
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Ваше Имя" required>
+            </div>
+            <div class="form-row">
+              <input type="text" name="contact_info" placeholder="Telegram / WhatsApp / Телефон" required>
+            </div>
+            <div class="form-row">
+              <select name="service_type" required>
+                <option value="" disabled selected>Что вас интересует?</option>
+                <option value="menu">Разработка меню & Техкарт</option>
+                <option value="audit">Аудит & Оптимизация</option>
+                <option value="turnkey">Запуск под ключ</option>
+                <option value="training">Обучение персонала</option>
+                <option value="other">Другое / Консультация</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <textarea name="message" placeholder="Краткое описание задачи или формат заведения (кофейня, ресторан, корнер to-go)..." rows="5"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить бриф</button>
+            </div>
+            <div id="formStatus" class="form-status"></div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer (упрощенный без навигации) -->
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none; padding-top: 0;">
+      <span>&copy; 2026 РАСУЛ АЛИЕВ. Все права защищены.</span>
+      <span>Bar Engineer, Mixologist & Barista Expert</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

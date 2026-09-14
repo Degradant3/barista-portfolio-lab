@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проекты и кейсы | Расул Алиев — Шеф-бариста</title>
+  <meta name="description" content="Реализованные проекты шеф-бариста Расула Алиева: запуск баров с нуля, оптимизация фудкоста, авторские меню и чайные интеграции.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/theme-dark.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        РАСУЛ АЛИЕВ<span>/LAB</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="services.html" class="nav-link">Услуги</a>
+        <a href="projects.html" class="nav-link active">Проекты</a>
+        <a href="about.html" class="nav-link">Обо мне</a>
+        <a href="contact.html" class="nav-link">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Projects Hero Section -->
+    <section class="section-spacing" style="padding-bottom: 30px;">
+      <div class="container">
+        <span class="badge">Практика & Опыт</span>
+        <h1 class="section-title" style="font-size: 3rem; margin-bottom: 16px;">Реализованные проекты</h1>
+        <p class="section-desc" style="max-width: 680px; font-size: 1.15rem;">
+          Кейсы с фокусом на измеримый бизнес-результат: от перезапуска меню с контролем фудкоста до проектирования эргономики бара и чайных интеграций.
+        </p>
+
+        <!-- Filter Controls -->
+        <div class="projects-filter-bar">
+          <button class="filter-btn active" data-filter="all">Все проекты</button>
+          <button class="filter-btn" data-filter="menu">Меню & Кордиалы</button>
+          <button class="filter-btn" data-filter="turnkey">Запуск под ключ</button>
+          <button class="filter-btn" data-filter="audit">Аудит & Оптимизация</button>
+          <button class="filter-btn" data-filter="tea">Чайные карты</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="section-spacing" style="padding-top: 10px;">
+      <div class="container">
+        <div class="projects-catalog-grid">
+
+          <!-- Project Card 1 -->
+          <article class="project-catalog-card" data-category="menu audit">
+            <div class="project-card-media">
+              <div class="project-media-badge">Меню / Аудит</div>
+              <div class="project-thumb-placeholder">
+                <span>[ Фото: Авторское меню и заготовки ]</span>
+              </div>
+            </div>
+            <div class="project-card-content">
+              <div class="project-metrics-row">
+                <div class="mini-metric">
+                  <span class="mini-val">-14%</span>
+                  <span class="mini-lbl">Food Cost</span>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-val">+22%</span>
+                  <span class="mini-lbl">Ср. чек бара</span>
+                </div>
+              </div>
+              <h2 class="project-catalog-title">Перезапуск сезонной карты напитков и оптимизация фудкоста</h2>
+              <p class="project-catalog-desc">
+                Полная замена покупных сиропов на натуральные кордиалы собственного производства. Внедрение точных технологических карт и калибровка экстракции зерна.
+              </p>
+              <div class="project-card-actions">
+                <a href="projects/project-1.html" class="btn btn-outline" style="width: 100%;">Смотреть кейс &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 2 -->
+          <article class="project-catalog-card" data-category="turnkey">
+            <div class="project-card-media">
+              <div class="project-media-badge">Под ключ</div>
+              <div class="project-thumb-placeholder">
+                <span>[ Фото: Станция бариста & Оборудование ]</span>
+              </div>
+            </div>
+            <div class="project-card-content">
+              <div class="project-metrics-row">
+                <div class="mini-metric">
+                  <span class="mini-val">24 дня</span>
+                  <span class="mini-lbl">Срок запуска</span>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-val">6 бариста</span>
+                  <span class="mini-lbl">Обучено с нуля</span>
+                </div>
+              </div>
+              <h2 class="project-catalog-title">Проектирование станции и запуск кофейни specialty-формата</h2>
+              <p class="project-catalog-desc">
+                Инженерия барной стойки по схеме «одного шага», выбор и установка двухгруппной мультибойлерной кофемашины, разработка чек-листов и стандартов открытия/закрытия.
+              </p>
+              <div class="project-card-actions">
+                <a href="projects/project-1.html" class="btn btn-outline" style="width: 100%;">Смотреть кейс &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 3 -->
+          <article class="project-catalog-card" data-category="tea menu">
+            <div class="project-card-media">
+              <div class="project-media-badge">Чай & Миксология</div>
+              <div class="project-thumb-placeholder">
+                <span>[ Фото: Пуэр & Чайная церемония ]</span>
+              </div>
+            </div>
+            <div class="project-card-content">
+              <div class="project-metrics-row">
+                <div class="mini-metric">
+                  <span class="mini-val">12</span>
+                  <span class="mini-lbl">Позиций чая</span>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-val">до 110 сек</span>
+                  <span class="mini-lbl">Время отдачи</span>
+                </div>
+              </div>
+              <h2 class="project-catalog-title">Интеграция аутентичной карты выдержанных пуэров в бар</h2>
+              <p class="project-catalog-desc">
+                Разработка чайной концепции на стыке традиционного китайского заваривания и быстрой ресторанной подачи. Внедрение согревающих и освежающих чайных напитков.
+              </p>
+              <div class="project-card-actions">
+                <a href="projects/project-1.html" class="btn btn-outline" style="width: 100%;">Смотреть кейс &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 4 -->
+          <article class="project-catalog-card" data-category="audit">
+            <div class="project-card-media">
+              <div class="project-media-badge">Аудит</div>
+              <div class="project-thumb-placeholder">
+                <span>[ Фото: Анализ экстракции и калибровка ]</span>
+              </div>
+            </div>
+            <div class="project-card-content">
+              <div class="project-metrics-row">
+                <div class="mini-metric">
+                  <span class="mini-val">-18%</span>
+                  <span class="mini-lbl">Списания сырья</span>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-val">100%</span>
+                  <span class="mini-lbl">Стабильность вкуса</span>
+                </div>
+              </div>
+              <h2 class="project-catalog-title">Технологический аудит экстракции и устранение скрытых потерь</h2>
+              <p class="project-catalog-desc">
+                Диагностика водоподготовки, проверка состояния ножей кофемолок и профилей помола. Устранение неравномерной экстракции и перерасхода молока в часы пиковых нагрузок.
+              </p>
+              <div class="project-card-actions">
+                <a href="projects/project-1.html" class="btn btn-outline" style="width: 100%;">Смотреть кейс &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="section-spacing" style="background-color: var(--bg-surface);">
+      <div class="container">
+        <div class="cta-banner">
+          <div>
+            <h2 class="cta-title">Хотите разобрать ваш бар или меню?</h2>
+            <p class="cta-desc">
+              Обсудим текущие метрики, найдем скрытые потери в заготовках или разработаем индивидуальную концепцию бара под ваш бюджет.
+            </p>
+          </div>
+          <a href="contact.html" class="btn btn-primary">Обсудить проект</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand-logo">РАСУЛ АЛИЕВ<span>/LAB</span></div>
+          <p>
+            Профессиональный кофейный и чайный инжиниринг: от настройки вкуса до управляемой экономики бара.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Навигация</h4>
+          <ul class="footer-nav">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="services.html">Каталог услуг</a></li>
+            <li><a href="projects.html">Кейсы и проекты</a></li>
+            <li><a href="about.html">О шеф-бариста</a></li>
+            <li><a href="contact.html">Контакты</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Связь</h4>
+          <ul class="footer-nav">
+            <li><a href="contact.html">Telegram</a></li>
+            <li><a href="contact.html">WhatsApp</a></li>
+            <li><a href="mailto:contact@example.com">Email</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 РАСУЛ АЛИЕВ. Все права защищены.</span>
+        <span>Specialty Coffee, Tea Masterclass & Bar Fusion Art</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
