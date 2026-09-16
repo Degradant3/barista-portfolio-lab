@@ -1037,3 +1037,234 @@ h1, h2, h3, h4, .brand-logo {
     grid-template-columns: 1fr;
   }
 }
+/* ==========================================================================
+   Signature Drinks Showcase (3D Laboratory Style)
+   ========================================================================== */
+.drinks-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  perspective: 1200px;
+}
+
+.drink-item-wrap {
+  position: relative;
+}
+
+.drink-card-3d {
+  position: relative;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 36px 30px;
+  overflow: hidden;
+  transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+}
+
+.drink-card-3d:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* Световое пятно за бокалом */
+.drink-glow {
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+/* Сцена бокала */
+.drink-visual-stage {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+
+.drink-image-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease-out;
+}
+
+.drink-image-container img {
+  max-height: 290px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.8));
+}
+
+/* Заглушка до загрузки реальных фото */
+.drink-placeholder-silhouette {
+  width: 160px;
+  height: 250px;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 40px 40px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  gap: 6px;
+}
+
+.drink-ph-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+.drink-ph-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Контактная тень на столе */
+.drink-shadow {
+  position: absolute;
+  bottom: 10px;
+  width: 140px;
+  height: 18px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 0%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(4px);
+  z-index: 1;
+}
+
+/* Паспорт напитка */
+.drink-info-plate {
+  position: relative;
+  z-index: 3;
+}
+
+.drink-meta-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.drink-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.drink-temp {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.drink-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.drink-hook {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Сенсорные полосы вкуса */
+.flavor-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-surface-elevated);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.flavor-bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-name {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.bar-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Раскрывающийся блок состава */
+.reveal-heading {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.drink-ingredients-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.drink-ingredients-list strong {
+  color: var(--text-primary);
+}
+
+.chef-quote {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  padding-left: 12px;
+  border-left: 2px solid var(--accent);
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .drinks-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -109,3 +109,49 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+  // 3D Tilt Physics for Signature Drinks
+  const tiltCards = document.querySelectorAll(".drink-card-3d");
+
+  tiltCards.forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left; // координата X внутри карточки
+      const y = e.clientY - rect.top;  // координата Y внутри карточки
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Вычисляем угол наклона (максимум 12 градусов)
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+      
+      // Смещаем внутреннее свечение под курсор
+      const glow = card.querySelector(".drink-glow");
+      if (glow) {
+        glow.style.transform = `translate(${x - centerX}px, ${y - centerY}px)`;
+        glow.style.opacity = "1";
+      }
+
+      // Слегка смещаем сам бокал для параллакс-глубины
+      const image = card.querySelector(".drink-image-container");
+      if (image) {
+        image.style.transform = `translateZ(40px) translateX(${(x - centerX) * 0.05}px) translateY(${(y - centerY) * 0.05}px)`;
+      }
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
+      
+      const glow = card.querySelector(".drink-glow");
+      if (glow) {
+        glow.style.opacity = "0";
+      }
+
+      const image = card.querySelector(".drink-image-container");
+      if (image) {
+        image.style.transform = "translateZ(0) translateX(0) translateY(0)";
+      }
+    });
+  });
