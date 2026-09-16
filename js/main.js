@@ -189,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // Функция обновления состояния
   function updateScanState(percentY, percentX = 50) {
     card.style.setProperty("--scan-y", `${percentY}%`);
     card.style.setProperty("--glare-x", `${percentX}%`);
@@ -205,7 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
       nameEl.textContent = active.name;
       descEl.textContent = active.desc;
 
-      // Синхронизация мобильных кнопок
       pills.forEach((pill, idx) => {
         const isActivePill = (idx === 0 && percentY <= 32) || 
                              (idx === 1 && percentY > 32 && percentY <= 80) || 
@@ -239,19 +237,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 2. Мобильные: ведение пальцем по экрану (Touch Scrubbing)
+  // 2. Мобильные: ведение пальцем без блокировки скролла страницы
   stage.addEventListener("touchmove", (e) => {
     if (e.touches.length > 0) {
       const touch = e.touches[0];
       const rect = stage.getBoundingClientRect();
-      const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
-      const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
       
-      requestAnimationFrame(() => updateScanState(percentY, percentX));
+      if (touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+        const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
+        const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
+        
+        requestAnimationFrame(() => updateScanState(percentY, percentX));
+      }
     }
-  }, { passive: false });
+  }, { passive: true });
 
-  // 3. Мобильные: переключение кнопками
+  // 3. Мобильные: клики по кнопкам «Пена», «Тело», «База»
   pills.forEach((pill) => {
     pill.addEventListener("click", () => {
       const targetPct = parseFloat(pill.dataset.layerPct);

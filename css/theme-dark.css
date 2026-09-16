@@ -1269,7 +1269,7 @@ h1, h2, h3, h4, .brand-logo {
   }
 }
 /* ==========================================================================
-   Flagship Drink Interactive Showcase (2.5D Engine)
+   Flagship Drink Interactive Showcase (Desktop + Mobile Responsive)
    ========================================================================== */
 .drink-card-interactive {
   --glare-x: 50%;
@@ -1280,14 +1280,13 @@ h1, h2, h3, h4, .brand-logo {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1.15fr;
-  gap: 48px;
+  gap: 40px;
   background: var(--bg-surface);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
-  padding: 48px;
-  overflow: hidden;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
-  perspective: 1000px;
+  padding: 44px;
+  overflow: hidden; /* Защита от горизонтального скролла */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
 .drink-ambient-glow {
@@ -1309,14 +1308,15 @@ h1, h2, h3, h4, .brand-logo {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 480px;
+  min-height: 440px;
   cursor: crosshair;
   z-index: 2;
+  width: 100%;
 }
 
 .drink-glass-wrapper {
   position: relative;
-  max-height: 430px;
+  max-height: 400px;
   user-select: none;
   transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition: transform 0.1s ease-out;
@@ -1325,32 +1325,15 @@ h1, h2, h3, h4, .brand-logo {
 
 .drink-photo {
   display: block;
-  max-height: 430px;
+  max-height: 400px;
   width: auto;
+  max-width: 100%;
   object-fit: contain;
   filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9));
   pointer-events: none;
 }
 
-/* Лабораторная шкала высоты */
-.stage-metric-scale {
-  position: absolute;
-  left: 24px;
-  top: 40px;
-  bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-family: monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.2);
-  border-left: 1px dashed rgba(255, 255, 255, 0.12);
-  padding-left: 8px;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Блик стекла: замаскирован силуэтом бокала */
+/* Блик стекла */
 .glass-specular-glare {
   position: absolute;
   inset: 0;
@@ -1375,28 +1358,43 @@ h1, h2, h3, h4, .brand-logo {
   opacity: 0.85;
 }
 
-/* Лазерный луч спектрометра */
+/* Шкала высоты */
+.stage-metric-scale {
+  position: absolute;
+  left: 12px;
+  top: 30px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.25);
+  border-left: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-left: 6px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Лазерный луч сканера */
 .scanner-laser-line {
   position: absolute;
-  left: -20%;
-  right: -20%;
+  left: 0;
+  right: 0;
+  width: 100%;
   top: var(--scan-y);
   height: 2px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(var(--accent-rgb), 0.2) 15%,
-    rgba(var(--accent-rgb), 0.9) 35%,
+    rgba(var(--accent-rgb), 0.3) 15%,
+    rgba(var(--accent-rgb), 0.95) 35%,
     #ffffff 50%,
-    rgba(var(--accent-rgb), 0.9) 65%,
-    rgba(var(--accent-rgb), 0.2) 85%,
+    rgba(var(--accent-rgb), 0.95) 65%,
+    rgba(var(--accent-rgb), 0.3) 85%,
     transparent 100%
   );
-  box-shadow: 
-    0 0 10px rgba(var(--accent-rgb), 0.9),
-    0 0 25px rgba(var(--accent-rgb), 0.5),
-    0 -3px 8px rgba(var(--accent-rgb), 0.25),
-    0 3px 8px rgba(var(--accent-rgb), 0.25);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.9);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.25s ease;
@@ -1410,74 +1408,60 @@ h1, h2, h3, h4, .brand-logo {
   opacity: 1;
 }
 
-/* Оптические калиперы-скобки на концах луча */
 .laser-caliper-left,
 .laser-caliper-right {
-  width: 8px;
-  height: 16px;
+  width: 6px;
+  height: 14px;
   border: 1px solid rgba(var(--accent-rgb), 0.9);
-  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
 }
 .laser-caliper-left { border-right: none; }
 .laser-caliper-right { border-left: none; }
 
-/* HUD-чип телеметрии сканера */
 .laser-telemetry-tag {
   position: absolute;
-  right: 5%;
+  right: 0;
   bottom: 8px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(10, 12, 16, 0.88);
-  border: 1px solid rgba(var(--accent-rgb), 0.6);
-  padding: 3px 10px;
+  gap: 5px;
+  background: rgba(10, 12, 16, 0.92);
+  border: 1px solid rgba(var(--accent-rgb), 0.7);
+  padding: 2px 8px;
   border-radius: 4px;
   font-family: monospace;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: #ffffff;
-  letter-spacing: 0.08em;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.05em;
   backdrop-filter: blur(6px);
   white-space: nowrap;
 }
 
 .pulse-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background: #00ff88;
   border-radius: 50%;
-  box-shadow: 0 0 8px #00ff88;
-  animation: pulseScan 1.2s infinite ease-in-out;
-}
-
-@keyframes pulseScan {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.75); }
-}
-
-.drink-stage:hover .scanner-laser-line {
-  opacity: 1;
+  box-shadow: 0 0 6px #00ff88;
 }
 
 /* Тень и каустика */
 .drink-ground-shadow {
   position: absolute;
-  bottom: 12px;
+  bottom: 8px;
   width: 55%;
-  height: 16px;
+  height: 14px;
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.95) 0%, transparent 75%);
-  filter: blur(6px);
+  filter: blur(5px);
   z-index: 1;
 }
 
 .drink-caustic-reflection {
   position: absolute;
-  bottom: 4px;
+  bottom: 2px;
   width: 70%;
-  height: 28px;
+  height: 24px;
   background: radial-gradient(ellipse at center, rgba(var(--accent-rgb), 0.45) 0%, transparent 70%);
-  filter: blur(14px);
+  filter: blur(12px);
   mix-blend-mode: screen;
 }
 
@@ -1493,7 +1477,9 @@ h1, h2, h3, h4, .brand-logo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .badge-tech {
@@ -1501,45 +1487,73 @@ h1, h2, h3, h4, .brand-logo {
   font-family: monospace;
   text-transform: uppercase;
   color: rgb(var(--accent-rgb));
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   font-weight: 700;
 }
 
 .sensor-temp {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-family: monospace;
 }
 
+.mobile-layer-triggers {
+  display: none;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.layer-pill {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: monospace;
+  font-size: 0.72rem;
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.layer-pill.active {
+  background: rgba(var(--accent-rgb), 0.2);
+  border-color: rgb(var(--accent-rgb));
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+}
+
 .drink-heading {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 800;
   margin-bottom: 12px;
   line-height: 1.2;
   color: #ffffff;
+  word-break: break-word;
 }
 
+.drink-annotation {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
 
-
-/* Блок активного анатомического слоя */
 .active-layer-indicator {
   background: rgba(255, 255, 255, 0.03);
   border-left: 3px solid rgb(var(--accent-rgb));
-  padding: 16px 20px;
+  padding: 14px 18px;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  margin-bottom: 28px;
-  min-height: 95px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-bottom: 24px;
+  min-height: 90px;
 }
 
 .layer-step-badge {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: rgb(var(--accent-rgb));
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.05em;
   margin-bottom: 4px;
 }
 
@@ -1552,28 +1566,27 @@ h1, h2, h3, h4, .brand-logo {
 
 .layer-description {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.45;
   margin: 0;
 }
 
-/* Сенсорные шкалы */
 .sensory-grid {
   display: flex;
   flex-direction: column;
   gap: 10px;
   background: var(--bg-surface-elevated);
-  padding: 18px 20px;
+  padding: 16px 18px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .sensor-item {
   display: grid;
-  grid-template-columns: 130px 1fr;
+  grid-template-columns: 120px 1fr;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -1592,66 +1605,83 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .chef-note {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   font-style: italic;
   line-height: 1.5;
-  padding-left: 14px;
+  padding-left: 12px;
   border-left: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .chef-note strong {
   font-style: normal;
-  color: var(--text-primary);
-}
-
-/* Кнопки переключения слоев на смартфонах */
-.mobile-layer-triggers {
-  display: none;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.layer-pill {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  font-family: monospace;
-  font-size: 0.75rem;
-  padding: 8px 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.layer-pill.active {
-  background: rgba(var(--accent-rgb), 0.18);
-  border-color: rgb(var(--accent-rgb));
   color: #ffffff;
-  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
 }
 
-/* Адаптация лазера и сцены под тач-устройства */
-@media (hover: none) {
-  .mobile-layer-triggers {
-    display: flex;
+/* ==========================================================================
+   Мобильная адаптация (Экраны до 880px)
+   ========================================================================== */
+@media (max-width: 880px) {
+  .drink-card-interactive {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 24px 16px !important;
+    gap: 28px !important;
+    border-radius: var(--radius-md) !important;
   }
 
-  /* Разрешаем показ лазера на смартфонах */
-  .scanner-laser-line {
-    opacity: 1;
-    transition: top 0.15s ease-out;
-  }
-
-  /* Запрещаем скролл страницы только при движении пальцем прямо по бокалу */
   .drink-stage {
-    touch-action: none;
-    cursor: grab;
+    min-height: 320px !important;
+    padding: 10px 0 !important;
+    order: 1;
   }
 
-  /* Мягкий статичный блик вместо мышиного */
-  .glass-specular-glare {
-    opacity: 0.45;
+  .drink-glass-wrapper {
+    max-height: 300px !important;
+  }
+
+  .drink-photo {
+    max-height: 300px !important;
+  }
+
+  .stage-metric-scale {
+    left: 4px !important;
+    top: 10px !important;
+    bottom: 10px !important;
+    font-size: 0.55rem !important;
+    opacity: 0.35;
+  }
+
+  .scanner-laser-line {
+    opacity: 1 !important; /* Лазер всегда виден на смартфонах */
+  }
+
+  .laser-telemetry-tag {
+    font-size: 0.6rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .mobile-layer-triggers {
+    display: flex !important;
+  }
+
+  .drink-specs-panel {
+    order: 2;
+    width: 100%;
+  }
+
+  .drink-heading {
+    font-size: 1.6rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  .drink-annotation {
+    font-size: 0.88rem !important;
+    margin-bottom: 18px !important;
+  }
+
+  .sensor-item {
+    grid-template-columns: 100px 1fr !important;
+    font-size: 0.72rem !important;
   }
 }
