@@ -1637,8 +1637,14 @@ h1, h2, h3, h4, .brand-logo {
   }
 
   .drink-glass-wrapper {
-    max-height: 300px !important;
-  }
+  position: relative;
+  max-height: 400px;
+  user-select: none;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.1s ease-out;
+  transform-style: preserve-3d;
+  touch-action: none; /* Запрещает скролл страницы только при касании бокала */
+}
 
   .drink-photo {
     max-height: 300px !important;

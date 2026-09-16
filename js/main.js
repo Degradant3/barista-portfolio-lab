@@ -237,26 +237,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 2. Мобильные: ведение пальцем без блокировки скролла страницы
-  stage.addEventListener("touchmove", (e) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      const rect = stage.getBoundingClientRect();
-      
-      if (touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+ // 2. Мобильные: сканирование пальцем по бокалу с фиксацией экрана
+  const glass = document.getElementById("glass-wrapper");
+
+  if (glass) {
+    // Мгновенный перенос лазера при первом касании
+    glass.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = glass.getBoundingClientRect();
+        const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
+        const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
+        updateScanState(percentY, percentX);
+      }
+    }, { passive: true });
+
+    // Плавное ведение сканера без дергания страницы
+    glass.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        e.preventDefault(); // Полностью блокирует сдвиг страницы во время ведения пальцем
+        const touch = e.touches[0];
+        const rect = glass.getBoundingClientRect();
         const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
         const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
         
         requestAnimationFrame(() => updateScanState(percentY, percentX));
       }
-    }
-  }, { passive: true });
-
-  // 3. Мобильные: клики по кнопкам «Пена», «Тело», «База»
-  pills.forEach((pill) => {
-    pill.addEventListener("click", () => {
-      const targetPct = parseFloat(pill.dataset.layerPct);
-      updateScanState(targetPct);
-    });
-  });
-});
+    }, { passive: false });
+  }
