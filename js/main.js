@@ -87,19 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+// ------------------------------------------------------------------------
+  // 3. Интерактивная сцена напитков (Поддержка масштабирования на N позиций)
   // ------------------------------------------------------------------------
-  // 3. Интерактивная сцена напитка (Запускается ТОЛЬКО на странице menu.html)
-  // ------------------------------------------------------------------------
-  const stage = document.getElementById("drink-stage");
-  const card = document.getElementById("master-drink-card");
-  const glass = document.getElementById("glass-wrapper");
-  const badgeEl = document.getElementById("layer-badge");
-  const nameEl = document.getElementById("layer-name");
-  const descEl = document.getElementById("layer-desc");
-  const pills = document.querySelectorAll(".layer-pill");
-
-  if (stage && card) {
-    const LAYERS = [
+  const DRINKS_DATABASE = {
+    "electric-indigo": [
       {
         range: [0, 32],
         badge: "Слой 1 / 3 // Верхний горизонт",
@@ -118,18 +110,55 @@ document.addEventListener("DOMContentLoaded", () => {
         name: "Очищенный монолитный лед",
         desc: "Кристальный лед медленной заморозки без воздушных пор. Обеспечивает термостабильность 3°C при нулевом обводнении."
       }
-    ];
+    ],
+    "amber-velvet": [
+      {
+        range: [0, 30],
+        badge: "Слой 1 / 3 // Верхний горизонт",
+        name: "Ароматический лепесток розы & Сливочная пена",
+        desc: "Эмульсия нормализованных сливок и стручковой ванили. Лепесток дамасской розы отдает эфирные масла, создавая цветочный купол аромата."
+      },
+      {
+        range: [30, 80],
+        badge: "Слой 2 / 3 // Сердце напитка",
+        name: "Каскадный экстракт выдержанного улуна & Персиковый кордиал",
+        desc: "Мраморная диффузия улуна Да Хун Пао и кордиала из белого персика с молочной кислотой. Бархатный баланс медовой сладости и танинов."
+      },
+      {
+        range: [80, 100],
+        badge: "Слой 3 / 3 // Фундамент",
+        name: "Редуцированная база шу-пуэра & Дикий лед",
+        desc: "Плотный концентрат пуэра горячей экстракции, резко охлажденный на монолитном кристальном льду. Дает минеральное орехово-древесное послевкусие."
+      }
+    ]
+  };
+
+  const drinkCards = document.querySelectorAll(".drink-card-interactive");
+
+  drinkCards.forEach((card) => {
+    const wrap = card.closest(".drink-item-wrap");
+    const drinkId = wrap?.dataset.drinkId || card.dataset.drinkId || "electric-indigo";
+    const layers = DRINKS_DATABASE[drinkId] || DRINKS_DATABASE["electric-indigo"];
+
+    const stage = card.querySelector(".drink-stage");
+    const glass = card.querySelector(".drink-glass-wrapper");
+    const badgeEl = card.querySelector(".layer-step-badge");
+    const nameEl = card.querySelector(".layer-title");
+    const descEl = card.querySelector(".layer-description");
+    const pills = card.querySelectorAll(".layer-pill");
+    const telemetryText = card.querySelector(".telemetry-text");
+
+    if (!stage) return;
 
     function updateScanState(percentY, percentX = 50) {
       card.style.setProperty("--scan-y", `${percentY}%`);
       card.style.setProperty("--glare-x", `${percentX}%`);
 
-      const telemetryText = card.querySelector(".telemetry-text");
       if (telemetryText) {
         telemetryText.textContent = `SPECTRAL // ${percentY.toFixed(1)}%`;
       }
 
-      const active = LAYERS.find((l) => percentY >= l.range[0] && percentY <= l.range[1]);
+      const active = layers.find((l) => percentY >= l.range[0] && percentY <= l.range[1]);
       if (active && nameEl && nameEl.textContent !== active.name) {
         if (badgeEl) badgeEl.textContent = active.badge;
         nameEl.textContent = active.name;
@@ -137,9 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         pills.forEach((pill, idx) => {
           const isActivePill =
-            (idx === 0 && percentY <= 32) ||
-            (idx === 1 && percentY > 32 && percentY <= 80) ||
-            (idx === 2 && percentY > 80);
+            (idx === 0 && percentY <= layers[0].range[1]) ||
+            (idx === 1 && percentY > layers[0].range[1] && percentY <= layers[1].range[1]) ||
+            (idx === 2 && percentY > layers[1].range[1]);
           pill.classList.toggle("active", isActivePill);
         });
       }
@@ -200,5 +229,4 @@ document.addEventListener("DOMContentLoaded", () => {
         updateScanState(targetPct);
       });
     });
-  }
-});
+  });
