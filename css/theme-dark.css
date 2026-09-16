@@ -1516,14 +1516,10 @@ h1, h2, h3, h4, .brand-logo {
   font-weight: 800;
   margin-bottom: 12px;
   line-height: 1.2;
+  color: #ffffff;
 }
 
-.drink-annotation {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
+
 
 /* Блок активного анатомического слоя */
 .active-layer-indicator {
@@ -1549,14 +1545,14 @@ h1, h2, h3, h4, .brand-logo {
 
 .layer-title {
   display: block;
-  font-size: 1.05rem;
-  color: var(--text-primary);
+  font-size: 1rem;
+  color: #ffffff;
   margin-bottom: 4px;
 }
 
 .layer-description {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.45;
   margin: 0;
 }
