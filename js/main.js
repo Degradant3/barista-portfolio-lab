@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 // ------------------------------------------------------------------------
-  // 3. Интерактивная сцена напитков (Поддержка масштабирования на N позиций)
+  // 3. Интерактивная сцена напитков (Мультикарточный трекинг 1:1)
   // ------------------------------------------------------------------------
   const DRINKS_DATABASE = {
     "electric-indigo": [
@@ -148,7 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const pills = card.querySelectorAll(".layer-pill");
     const telemetryText = card.querySelector(".telemetry-text");
 
-    if (!stage) return;
+    if (!stage || !glass) return;
+
+    let ticking = false;
 
     function updateScanState(percentY, percentX = 50) {
       card.style.setProperty("--scan-y", `${percentY}%`);
@@ -174,55 +176,54 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Десктоп: мышь
-    if (window.matchMedia("(hover: hover)").matches) {
-      stage.addEventListener("mousemove", (e) => {
-        const rect = stage.getBoundingClientRect();
-        const percentX = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-        const percentY = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    function handlePointerMove(e) {
+      const glassRect = glass.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
 
-        const tiltX = (((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2)) * -8;
-        const tiltY = (((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2)) * 8;
+      // Координаты лазера привязаны строго к габаритам бокала
+      const percentY = Math.max(0, Math.min(100, ((e.clientY - glassRect.top) / glassRect.height) * 100));
+      const percentX = Math.max(0, Math.min(100, ((e.clientX - glassRect.left) / glassRect.width) * 100));
 
+      // Наклон 2.5D рассчитывается от центра сцены
+      const tiltX = (((e.clientY - stageRect.top) - stageRect.height / 2) / (stageRect.height / 2)) * -8;
+      const tiltY = (((e.clientX - stageRect.left) - stageRect.width / 2) / (stageRect.width / 2)) * 8;
+
+      if (!ticking) {
         requestAnimationFrame(() => {
           card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
           card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
           updateScanState(percentY, percentX);
+          ticking = false;
         });
-      });
-
-      stage.addEventListener("mouseleave", () => {
-        card.style.setProperty("--tilt-x", "0deg");
-        card.style.setProperty("--tilt-y", "0deg");
-        card.style.setProperty("--glare-x", "50%");
-      });
+        ticking = true;
+      }
     }
 
-    // Мобильные: ведение пальцем по бокалу с изоляцией от скролла страницы
-    if (glass) {
-      glass.addEventListener("touchstart", (e) => {
-        if (e.touches.length > 0) {
-          const touch = e.touches[0];
-          const rect = glass.getBoundingClientRect();
-          const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
-          const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
-          updateScanState(percentY, percentX);
-        }
-      }, { passive: true });
-
-      glass.addEventListener("touchmove", (e) => {
-        if (e.touches.length > 0) {
-          e.preventDefault();
-          const touch = e.touches[0];
-          const rect = glass.getBoundingClientRect();
-          const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
-          const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
-          requestAnimationFrame(() => updateScanState(percentY, percentX));
-        }
-      }, { passive: false });
+    function handlePointerLeave() {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+      card.style.setProperty("--glare-x", "50%");
     }
 
-    // Мобильные кнопки выбора слоя
+    // Слушатели десктопа (срабатывают на любых конфигурациях ОС)
+    stage.addEventListener("mousemove", handlePointerMove);
+    stage.addEventListener("mouseleave", handlePointerLeave);
+
+    // Мобильный тач-трекинг с изоляцией от вертикального скролла
+    glass.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 0) {
+        handlePointerMove(e.touches[0]);
+      }
+    }, { passive: true });
+
+    glass.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        e.preventDefault();
+        handlePointerMove(e.touches[0]);
+      }
+    }, { passive: false });
+
+    // Кнопки прямого выбора слоев
     pills.forEach((pill) => {
       pill.addEventListener("click", () => {
         const targetPct = parseFloat(pill.dataset.layerPct);
@@ -230,3 +231,4 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+});

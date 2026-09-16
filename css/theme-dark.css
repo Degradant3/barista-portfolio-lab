@@ -1384,6 +1384,7 @@ h1, h2, h3, h4, .brand-logo {
   width: 100%;
   top: var(--scan-y);
   height: 2px;
+  will-change: top; /* Аппаратная оптимизация для плавного 60 FPS следования */
   background: linear-gradient(
     90deg,
     transparent 0%,
