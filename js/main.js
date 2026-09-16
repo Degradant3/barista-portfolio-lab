@@ -4,7 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ------------------------------------------------------------------------
+// ------------------------------------------------------------------------
   // 1. Мобильная навигация (Burger Toggle)
   // ------------------------------------------------------------------------
   const menuToggle = document.querySelector(".menu-toggle");
@@ -12,34 +12,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
+
       const isOpen = menuToggle.classList.toggle("active");
-      navLinks.classList.toggle("active");
+      menuToggle.classList.toggle("open", isOpen);
+      navLinks.classList.toggle("active", isOpen);
+      navLinks.classList.toggle("open", isOpen);
       menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
       document.body.classList.toggle("menu-open", isOpen);
     });
 
-    // Закрытие шторки при клике на любую вкладку
+    // Закрытие шторки при клике на любую ссылку
     navLinks.querySelectorAll(".nav-link").forEach((link) => {
       link.addEventListener("click", () => {
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
+        menuToggle.classList.remove("active", "open");
+        navLinks.classList.remove("active", "open");
         menuToggle.setAttribute("aria-expanded", "false");
         document.body.classList.remove("menu-open");
       });
     });
 
-    // Закрытие при клике мимо меню
+    // Закрытие при тапе в любое свободное место экрана
     document.addEventListener("click", (e) => {
       if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
+        menuToggle.classList.remove("active", "open");
+        navLinks.classList.remove("active", "open");
         menuToggle.setAttribute("aria-expanded", "false");
         document.body.classList.remove("menu-open");
       }
     });
   }
-
   // ------------------------------------------------------------------------
   // 2. Асинхронная отправка формы брифа (Без редиректа на /api/send-brief)
   // ------------------------------------------------------------------------

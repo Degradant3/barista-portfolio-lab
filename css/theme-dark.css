@@ -1782,3 +1782,113 @@ header,
     text-decoration: none;
   }
 }
+/* ==========================================================================
+   Гарантированное отображение мобильного меню (Burger & Dropdown)
+   ========================================================================== */
+
+/* На широких мониторах кнопка всегда скрыта */
+.menu-toggle {
+  display: none;
+}
+
+/* На экранах планшетов и телефонов (до 992px) */
+@media (max-width: 992px) {
+  .site-header {
+    position: relative !important;
+    z-index: 9999 !important;
+    overflow: visible !important;
+  }
+
+  .nav-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+
+  /* Кнопка «3 полоски» в правом верхнем углу */
+  .menu-toggle {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 42px !important;
+    height: 42px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-left: auto !important; /* Прижимает кнопку строго к правому краю */
+    cursor: pointer !important;
+    z-index: 10001 !important;
+    pointer-events: auto !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 3 четкие белые полоски */
+  .menu-toggle span {
+    display: block !important;
+    width: 24px !important;
+    height: 2.5px !important;
+    background-color: #ffffff !important;
+    border-radius: 2px !important;
+    transition: transform 0.25s ease, opacity 0.2s ease !important;
+  }
+
+  /* Трансформация в крестик при открытом меню */
+  .menu-toggle.active span:nth-child(1),
+  .menu-toggle.open span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg) !important;
+  }
+
+  .menu-toggle.active span:nth-child(2),
+  .menu-toggle.open span:nth-child(2) {
+    opacity: 0 !important;
+  }
+
+  .menu-toggle.active span:nth-child(3),
+  .menu-toggle.open span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg) !important;
+  }
+
+  /* Выпадающая панель вкладок по умолчанию скрыта */
+  .nav-links {
+    display: none !important;
+  }
+
+  /* Выпадающая панель вкладок при нажатии */
+  .nav-links.active,
+  .nav-links.open,
+  .nav-links.is-open {
+    display: flex !important;
+    flex-direction: column !important;
+    position: absolute !important;
+    top: 100% !important; /* Открывается ровно под шапкой */
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background: rgba(10, 12, 16, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    padding: 20px 24px 30px !important;
+    gap: 16px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9) !important;
+    z-index: 10000 !important;
+  }
+
+  /* Ссылки внутри шторки меню */
+  .nav-links .nav-link {
+    display: block !important;
+    font-size: 1.15rem !important;
+    padding: 12px 0 !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    text-decoration: none !important;
+  }
+
+  .nav-links .nav-link:last-child {
+    border-bottom: none !important;
+  }
+}
