@@ -155,8 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
- // ==========================================================================
-// Flagship Drink Interactive Physics & Anatomy Scanner
+// ==========================================================================
+// Flagship Drink Interactive Physics & Anatomy Scanner (Desktop + Mobile)
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const stage = document.getElementById("drink-stage");
@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const badgeEl = document.getElementById("layer-badge");
   const nameEl = document.getElementById("layer-name");
   const descEl = document.getElementById("layer-desc");
+  const pills = document.querySelectorAll(".layer-pill");
 
   if (!stage || !card) return;
 
@@ -188,41 +189,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  const isHoverable = window.matchMedia("(hover: hover)").matches;
+  // Функция обновления состояния
+  function updateScanState(percentY, percentX = 50) {
+    card.style.setProperty("--scan-y", `${percentY}%`);
+    card.style.setProperty("--glare-x", `${percentX}%`);
 
-  if (isHoverable) {
+    const telemetryText = card.querySelector(".telemetry-text");
+    if (telemetryText) {
+      telemetryText.textContent = `SPECTRAL // ${percentY.toFixed(1)}%`;
+    }
+
+    const active = LAYERS.find((l) => percentY >= l.range[0] && percentY <= l.range[1]);
+    if (active && nameEl && nameEl.textContent !== active.name) {
+      badgeEl.textContent = active.badge;
+      nameEl.textContent = active.name;
+      descEl.textContent = active.desc;
+
+      // Синхронизация мобильных кнопок
+      pills.forEach((pill, idx) => {
+        const isActivePill = (idx === 0 && percentY <= 32) || 
+                             (idx === 1 && percentY > 32 && percentY <= 80) || 
+                             (idx === 2 && percentY > 80);
+        pill.classList.toggle("active", isActivePill);
+      });
+    }
+  }
+
+  // 1. Десктоп: движение мыши
+  if (window.matchMedia("(hover: hover)").matches) {
     stage.addEventListener("mousemove", (e) => {
       const rect = stage.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const percentX = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const percentY = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
 
-      const percentX = Math.max(0, Math.min(100, (x / rect.width) * 100));
-      const percentY = Math.max(0, Math.min(100, (y / rect.height) * 100));
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const tiltX = ((y - centerY) / centerY) * -8;
-      const tiltY = ((x - centerX) / centerX) * 8;
+      const tiltX = (((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2)) * -8;
+      const tiltY = (((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2)) * 8;
 
       requestAnimationFrame(() => {
-        card.style.setProperty("--glare-x", `${percentX}%`);
-        card.style.setProperty("--scan-y", `${percentY}%`);
         card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
         card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
-
-        // Живой вывод координаты на лазерном сканере
-        const telemetryText = card.querySelector(".telemetry-text");
-        if (telemetryText) {
-          telemetryText.textContent = `SPECTRAL // ${percentY.toFixed(1)}%`;
-        }
-
-        // Переключение описания активного слоя
-        const active = LAYERS.find((l) => percentY >= l.range[0] && percentY <= l.range[1]);
-        if (active && nameEl && nameEl.textContent !== active.name) {
-          badgeEl.textContent = active.badge;
-          nameEl.textContent = active.name;
-          descEl.textContent = active.desc;
-        }
+        updateScanState(percentY, percentX);
       });
     });
 
@@ -232,4 +238,24 @@ document.addEventListener("DOMContentLoaded", () => {
       card.style.setProperty("--glare-x", "50%");
     });
   }
+
+  // 2. Мобильные: ведение пальцем по экрану (Touch Scrubbing)
+  stage.addEventListener("touchmove", (e) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      const rect = stage.getBoundingClientRect();
+      const percentY = Math.max(0, Math.min(100, ((touch.clientY - rect.top) / rect.height) * 100));
+      const percentX = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
+      
+      requestAnimationFrame(() => updateScanState(percentY, percentX));
+    }
+  }, { passive: false });
+
+  // 3. Мобильные: переключение кнопками
+  pills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const targetPct = parseFloat(pill.dataset.layerPct);
+      updateScanState(targetPct);
+    });
+  });
 });

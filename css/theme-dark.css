@@ -1605,27 +1605,53 @@ h1, h2, h3, h4, .brand-logo {
   color: var(--text-primary);
 }
 
-/* Fallback для мобильных устройств */
-@media (hover: none) {
-  .glass-specular-glare,
-  .scanner-laser-line {
-    display: none;
-  }
-  .drink-stage {
-    cursor: default;
-  }
+/* Кнопки переключения слоев на смартфонах */
+.mobile-layer-triggers {
+  display: none;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
-@media (max-width: 960px) {
-  .drink-card-interactive {
-    grid-template-columns: 1fr;
-    padding: 28px;
-    gap: 32px;
+.layer-pill {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: monospace;
+  font-size: 0.75rem;
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.layer-pill.active {
+  background: rgba(var(--accent-rgb), 0.18);
+  border-color: rgb(var(--accent-rgb));
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
+}
+
+/* Адаптация лазера и сцены под тач-устройства */
+@media (hover: none) {
+  .mobile-layer-triggers {
+    display: flex;
   }
+
+  /* Разрешаем показ лазера на смартфонах */
+  .scanner-laser-line {
+    opacity: 1;
+    transition: top 0.15s ease-out;
+  }
+
+  /* Запрещаем скролл страницы только при движении пальцем прямо по бокалу */
   .drink-stage {
-    min-height: 380px;
+    touch-action: none;
+    cursor: grab;
   }
-  .drink-photo {
-    max-height: 350px;
+
+  /* Мягкий статичный блик вместо мышиного */
+  .glass-specular-glare {
+    opacity: 0.45;
   }
 }
