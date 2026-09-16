@@ -12,32 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener("click", (e) => {
-      e.preventDefault();
       e.stopPropagation();
-
       const isOpen = menuToggle.classList.toggle("active");
-      menuToggle.classList.toggle("open", isOpen);
       navLinks.classList.toggle("active", isOpen);
-      navLinks.classList.toggle("open", isOpen);
       menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
       document.body.classList.toggle("menu-open", isOpen);
     });
 
-    // Закрытие шторки при клике на любую ссылку
+    // Закрытие шторки при переходе по ссылке
     navLinks.querySelectorAll(".nav-link").forEach((link) => {
       link.addEventListener("click", () => {
-        menuToggle.classList.remove("active", "open");
-        navLinks.classList.remove("active", "open");
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
         menuToggle.setAttribute("aria-expanded", "false");
         document.body.classList.remove("menu-open");
       });
     });
 
-    // Закрытие при тапе в любое свободное место экрана
+    // Закрытие при тапе мимо меню
     document.addEventListener("click", (e) => {
       if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-        menuToggle.classList.remove("active", "open");
-        navLinks.classList.remove("active", "open");
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
         menuToggle.setAttribute("aria-expanded", "false");
         document.body.classList.remove("menu-open");
       }

@@ -1691,111 +1691,21 @@ h1, h2, h3, h4, .brand-logo {
     font-size: 0.72rem !important;
   }
 }
-/* Принудительная кликабельность мобильного меню */
-header,
-.site-header,
-.navbar {
-  position: relative;
-  z-index: 1000 !important;
-}
-
-.menu-toggle,
-.nav-toggle,
-.burger,
-.hamburger {
-  position: relative;
-  z-index: 1001 !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
 /* ==========================================================================
-   Header & Mobile Navigation Fixes
-   ========================================================================== */
-@media (max-width: 880px) {
-  .site-header {
-    position: relative;
-    z-index: 1000;
-  }
-
-  .menu-toggle {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-    background: transparent !important;
-    border: none !important;
-    cursor: pointer !important;
-    padding: 0;
-    z-index: 1002 !important;
-  }
-
-  .menu-toggle span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #ffffff;
-    border-radius: 2px;
-    transition: transform 0.25s ease, opacity 0.2s ease;
-  }
-
-  /* Анимация бургера в крестик */
-  .menu-toggle.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-  .menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
-
-  /* Выпадающий список навигации */
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background: rgba(10, 12, 16, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 24px 20px;
-    gap: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-    z-index: 1001;
-  }
-
-  .nav-links.active {
-    display: flex !important;
-  }
-
-  .nav-links .nav-link {
-    font-size: 1.1rem;
-    padding: 10px 0;
-    color: #ffffff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    text-decoration: none;
-  }
-}
-/* ==========================================================================
-   Гарантированное отображение мобильного меню (Burger & Dropdown)
+   Мобильная навигация: Чистая архитектура (экраны до 992px)
    ========================================================================== */
 
-/* На широких мониторах кнопка всегда скрыта */
+/* На компьютерах бургер всегда скрыт */
 .menu-toggle {
   display: none;
 }
 
-/* На экранах планшетов и телефонов (до 992px) */
 @media (max-width: 992px) {
+  /* Шапка и отмена обрезки элементов */
   .site-header {
-    position: relative !important;
-    z-index: 9999 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10000 !important;
     overflow: visible !important;
   }
 
@@ -1804,86 +1714,83 @@ header,
     align-items: center !important;
     justify-content: space-between !important;
     position: relative !important;
-    width: 100% !important;
   }
 
-  /* Кнопка «3 полоски» в правом верхнем углу */
+  /* Кнопка «3 полоски» */
   .menu-toggle {
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 5px !important;
-    width: 42px !important;
-    height: 42px !important;
+    justify-content: space-between !important;
+    width: 28px !important;
+    height: 20px !important;
     background: transparent !important;
     border: none !important;
-    padding: 0 !important;
-    margin-left: auto !important; /* Прижимает кнопку строго к правому краю */
     cursor: pointer !important;
-    z-index: 10001 !important;
-    pointer-events: auto !important;
+    padding: 0 !important;
+    z-index: 10002 !important;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* 3 четкие белые полоски */
   .menu-toggle span {
     display: block !important;
-    width: 24px !important;
-    height: 2.5px !important;
+    width: 100% !important;
+    height: 2px !important;
     background-color: #ffffff !important;
     border-radius: 2px !important;
     transition: transform 0.25s ease, opacity 0.2s ease !important;
   }
 
-  /* Трансформация в крестик при открытом меню */
-  .menu-toggle.active span:nth-child(1),
-  .menu-toggle.open span:nth-child(1) {
-    transform: translateY(7.5px) rotate(45deg) !important;
+  /* Анимация в крестик при открытии */
+  .menu-toggle.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg) !important;
   }
-
-  .menu-toggle.active span:nth-child(2),
-  .menu-toggle.open span:nth-child(2) {
+  .menu-toggle.active span:nth-child(2) {
     opacity: 0 !important;
   }
-
-  .menu-toggle.active span:nth-child(3),
-  .menu-toggle.open span:nth-child(3) {
-    transform: translateY(-7.5px) rotate(-45deg) !important;
+  .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg) !important;
   }
 
-  /* Выпадающая панель вкладок по умолчанию скрыта */
+  /* Панель меню на весь экран под шапкой */
   .nav-links {
-    display: none !important;
-  }
-
-  /* Выпадающая панель вкладок при нажатии */
-  .nav-links.active,
-  .nav-links.open,
-  .nav-links.is-open {
-    display: flex !important;
-    flex-direction: column !important;
-    position: absolute !important;
-    top: 100% !important; /* Открывается ровно под шапкой */
+    position: fixed !important;
+    top: 60px !important;
     left: 0 !important;
     right: 0 !important;
-    width: 100% !important;
-    background: rgba(10, 12, 16, 0.98) !important;
+    width: 100vw !important;
+    height: calc(100vh - 60px) !important;
+    background: rgba(10, 10, 12, 0.98) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    padding: 20px 24px 30px !important;
-    gap: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 30px 24px !important;
+    gap: 18px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9) !important;
-    z-index: 10000 !important;
+    z-index: 10001 !important;
+
+    /* Плавное открытие без скачков */
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-15px) !important;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease !important;
   }
 
-  /* Ссылки внутри шторки меню */
+  /* Активное состояние шторки */
+  .nav-links.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Ссылки внутри шторки */
   .nav-links .nav-link {
     display: block !important;
     font-size: 1.15rem !important;
-    padding: 12px 0 !important;
     color: #ffffff !important;
+    padding: 12px 0 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
     text-decoration: none !important;
   }
