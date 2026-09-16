@@ -58,43 +58,38 @@
 
           <!-- Сцена с бокалом и оптикой -->
           <div class="drink-stage" id="drink-stage">
-            <div class="drink-glass-wrapper" id="glass-wrapper">
+            
+            <!-- Лабораторная шкала высоты сканирования -->
+            <div class="stage-metric-scale" aria-hidden="true">
+              <span>TOP // 00</span>
+              <span>25%</span>
+              <span>50%</span>
+              <span>75%</span>
+              <span>BASE // 100</span>
+            </div>
+
+            <!-- Контейнер с передачей маски для блика -->
+            <div class="drink-glass-wrapper" id="glass-wrapper" style="--drink-mask: url('assets/images/drinks/drink-1.png');">
               <img src="assets/images/drinks/drink-1.png" alt="Electric Indigo Float" class="drink-photo" id="drink-photo">
               
-              <!-- Интерактивный блик стекла -->
+              <!-- Интерактивный блик стекла (строго внутри контура) -->
               <div class="glass-specular-glare"></div>
 
-              <!-- Лазерный сканер слоев -->
-              <div class="scanner-laser-line"></div>
+              <!-- Высокотехнологичный спектральный сканер -->
+              <div class="scanner-laser-line">
+                <span class="laser-caliper-left"></span>
+                <div class="laser-telemetry-tag">
+                  <span class="pulse-dot"></span>
+                  <span class="telemetry-text">SCAN // 24.0%</span>
+                </div>
+                <span class="laser-caliper-right"></span>
+              </div>
             </div>
 
             <!-- Тень и преломление света (каустика) -->
             <div class="drink-ground-shadow"></div>
             <div class="drink-caustic-reflection"></div>
           </div>
-
-          <!-- Паспорт напитка и динамические данные -->
-          <div class="drink-specs-panel">
-            <div class="specs-header">
-              <span class="badge-tech">Formula #01 // Lactic Float</span>
-              <span class="sensor-temp">Подача: 3°C</span>
-            </div>
-
-            <h2 class="drink-heading">Electric Indigo Float</h2>
-            <p class="drink-annotation">
-              Многоуровневая подача с гравитационным каскадом соленой крем-пены сквозь концентрированный экстракт дикой черники и цветов анчана.
-            </p>
-
-            <!-- Блок динамического слоя (меняется при движении мыши по высоте) -->
-            <div class="active-layer-indicator">
-              <div class="layer-step-badge" id="layer-badge">Слой 1 / 3 // Верхний горизонт</div>
-              <div class="layer-data">
-                <strong class="layer-title" id="layer-name">Холодная соленая крем-пена (Cold Foam)</strong>
-                <p class="layer-description" id="layer-desc">
-                  Плотная эмульсия сливок 10% и морской соли. Задерживает ароматические эфиры и создает контраст температур при первом глотке.
-                </p>
-              </div>
-            </div>
 
             <!-- Сенсорный баланс -->
             <div class="sensory-grid">

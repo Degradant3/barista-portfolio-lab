@@ -1332,32 +1332,128 @@ h1, h2, h3, h4, .brand-logo {
   pointer-events: none;
 }
 
-/* Блик по стеклу */
+/* Лабораторная шкала высоты */
+.stage-metric-scale {
+  position: absolute;
+  left: 24px;
+  top: 40px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.2);
+  border-left: 1px dashed rgba(255, 255, 255, 0.12);
+  padding-left: 8px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Блик стекла: замаскирован силуэтом бокала */
 .glass-specular-glare {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  -webkit-mask-image: var(--drink-mask);
+  mask-image: var(--drink-mask);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
   background: linear-gradient(
     90deg,
-    transparent calc(var(--glare-x) - 15%),
-    rgba(255, 255, 255, 0.3) var(--glare-x),
-    transparent calc(var(--glare-x) + 15%)
+    transparent calc(var(--glare-x) - 18%),
+    rgba(255, 255, 255, 0.1) calc(var(--glare-x) - 8%),
+    rgba(255, 255, 255, 0.55) var(--glare-x),
+    rgba(255, 255, 255, 0.1) calc(var(--glare-x) + 8%),
+    transparent calc(var(--glare-x) + 18%)
   );
-  mix-blend-mode: overlay;
+  mix-blend-mode: screen;
+  opacity: 0.85;
 }
 
-/* Лазер сканера */
+/* Лазерный луч спектрометра */
 .scanner-laser-line {
   position: absolute;
-  left: -15%;
-  right: -15%;
+  left: -20%;
+  right: -20%;
   top: var(--scan-y);
-  height: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.9), #ffffff, rgba(var(--accent-rgb), 0.9), transparent);
-  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.9);
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--accent-rgb), 0.2) 15%,
+    rgba(var(--accent-rgb), 0.9) 35%,
+    #ffffff 50%,
+    rgba(var(--accent-rgb), 0.9) 65%,
+    rgba(var(--accent-rgb), 0.2) 85%,
+    transparent 100%
+  );
+  box-shadow: 
+    0 0 10px rgba(var(--accent-rgb), 0.9),
+    0 0 25px rgba(var(--accent-rgb), 0.5),
+    0 -3px 8px rgba(var(--accent-rgb), 0.25),
+    0 3px 8px rgba(var(--accent-rgb), 0.25);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.drink-stage:hover .scanner-laser-line {
+  opacity: 1;
+}
+
+/* Оптические калиперы-скобки на концах луча */
+.laser-caliper-left,
+.laser-caliper-right {
+  width: 8px;
+  height: 16px;
+  border: 1px solid rgba(var(--accent-rgb), 0.9);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
+}
+.laser-caliper-left { border-right: none; }
+.laser-caliper-right { border-left: none; }
+
+/* HUD-чип телеметрии сканера */
+.laser-telemetry-tag {
+  position: absolute;
+  right: 5%;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10, 12, 16, 0.88);
+  border: 1px solid rgba(var(--accent-rgb), 0.6);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #ffffff;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff88;
+  animation: pulseScan 1.2s infinite ease-in-out;
+}
+
+@keyframes pulseScan {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
 }
 
 .drink-stage:hover .scanner-laser-line {

@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-  // ==========================================================================
+ // ==========================================================================
 // Flagship Drink Interactive Physics & Anatomy Scanner
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
@@ -167,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!stage || !card) return;
 
-  // Конфигурация анатомических слоев (в % от верха бокала)
   const LAYERS = [
     {
       range: [0, 32],
@@ -189,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // Проверяем, поддерживает ли устройство точный hover
   const isHoverable = window.matchMedia("(hover: hover)").matches;
 
   if (isHoverable) {
@@ -198,11 +196,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      // Нормализуем координаты в проценты (0 - 100%)
       const percentX = Math.max(0, Math.min(100, (x / rect.width) * 100));
       const percentY = Math.max(0, Math.min(100, (y / rect.height) * 100));
 
-      // Расчет 3D-наклона (до 8 градусов)
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       const tiltX = ((y - centerY) / centerY) * -8;
@@ -214,9 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
         card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
         card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
 
-        // Поиск активного слоя по вертикали
+        // Живой вывод координаты на лазерном сканере
+        const telemetryText = card.querySelector(".telemetry-text");
+        if (telemetryText) {
+          telemetryText.textContent = `SPECTRAL // ${percentY.toFixed(1)}%`;
+        }
+
+        // Переключение описания активного слоя
         const active = LAYERS.find((l) => percentY >= l.range[0] && percentY <= l.range[1]);
-        if (active && nameEl.textContent !== active.name) {
+        if (active && nameEl && nameEl.textContent !== active.name) {
           badgeEl.textContent = active.badge;
           nameEl.textContent = active.name;
           descEl.textContent = active.desc;
