@@ -41,162 +41,92 @@
   </header>
 
   <main>
-    <!-- Hero Section: Лаборатория -->
-    <section class="section-spacing" style="padding-bottom: 20px;">
-      <div class="container">
-        <span class="badge">Лаборатория миксологии // R&D</span>
-        <h1 class="section-title" style="font-size: 3rem; margin-bottom: 16px;">Авторские меню & Вкусовые формулы</h1>
-        <p class="section-desc" style="max-width: 720px; font-size: 1.15rem;">
-          Каждый напиток — это баланс органических кислот, экстракции сырья и продуманной скорости отдачи. Наведите курсор на напиток, чтобы изучить его физику, органолептику и структуру вкуса.
-        </p>
-      </div>
-    </section>
+  <section class="section-spacing">
+    <div class="container">
+      <span class="badge">R&D Лаборатория // Флагманский прототип</span>
+      <h1 class="section-title" style="font-size: 2.8rem; margin-bottom: 12px;">Интерактивная карта вкуса</h1>
+      <p class="section-desc" style="max-width: 680px; margin-bottom: 40px;">
+        Наведите курсор на бокал, чтобы активировать оптический сканер слоев и динамический блик по кривизне стекла.
+      </p>
 
-    <!-- Interactive Showcase Section -->
-    <section class="section-spacing" style="padding-top: 20px;">
-      <div class="container">
-        
-        <div class="drinks-showcase-grid">
+      <!-- Флагманский стенд одного напитка -->
+      <div class="drink-item-wrap" data-drink-id="electric-indigo">
+        <div class="drink-card-interactive" id="master-drink-card">
+          
+          <!-- Фоновая подсветка -->
+          <div class="drink-ambient-glow"></div>
 
-          <!-- Напиток 1 (Шаблон под первое ваше фото) -->
-          <div class="drink-item-wrap">
-            <div class="drink-card-3d" data-tilt>
-              <div class="drink-glow" style="--glow-color: rgba(229, 62, 62, 0.25);"></div>
+          <!-- Сцена с бокалом и оптикой -->
+          <div class="drink-stage" id="drink-stage">
+            <div class="drink-glass-wrapper" id="glass-wrapper">
+              <img src="assets/images/drinks/drink-1.png" alt="Electric Indigo Float" class="drink-photo" id="drink-photo">
               
-              <div class="drink-visual-stage">
-                <div class="drink-shadow"></div>
-                <!-- Временный силуэт / сюда встанет обработанное фото -->
-                <div class="drink-image-container">
-                  <div class="drink-placeholder-silhouette">
-                    <span class="drink-ph-title">Напиток #01</span>
-                    <span class="drink-ph-sub">[ Ожидает фото ]</span>
-                  </div>
-                </div>
-              </div>
+              <!-- Интерактивный блик стекла -->
+              <div class="glass-specular-glare"></div>
 
-              <div class="drink-info-plate">
-                <div class="drink-meta-top">
-                  <span class="drink-tag">Холодный // Освежающий</span>
-                  <span class="drink-temp">4°C</span>
-                </div>
-                <h3 class="drink-title">Грейпфрутовый Эспрессо-Тоник с Кардамоном</h3>
-                <p class="drink-hook">Яркая яблочно-винная кислотность с пряным согревающим послевкусием.</p>
-
-                <!-- Интерактивная сенсорная шкала -->
-                <div class="flavor-bars">
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Кислотность</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 85%;"></div></div>
-                  </div>
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Сладость</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 40%;"></div></div>
-                  </div>
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Плотность (Body)</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 50%;"></div></div>
-                  </div>
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Горечь</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 65%;"></div></div>
-                  </div>
-                </div>
-
-                <!-- Выдвигающийся состав -->
-                <div class="drink-details-reveal">
-                  <h4 class="reveal-heading">Анатомия формулы:</h4>
-                  <ul class="drink-ingredients-list">
-                    <li><strong>База:</strong> Двойной эспрессо (Эфиопия натуральной обработки)</li>
-                    <li><strong>Заготовка:</strong> Домашний кордиал грейпфрут-кардамон (Acid adjusted)</li>
-                    <li><strong>Баланс:</strong> Сухой индийский тоник без подсластителей</li>
-                    <li><strong>Гарниш:</strong> Дегидрированный чипс цитруса с пеплом кардамона</li>
-                  </ul>
-                  <div class="chef-quote">
-                    «Напиток решает проблему переизбытка сахара: натуральная фруктовая кислота подчеркивает ягодный профиль кофе».
-                  </div>
-                </div>
-              </div>
+              <!-- Лазерный сканер слоев -->
+              <div class="scanner-laser-line"></div>
             </div>
+
+            <!-- Тень и преломление света (каустика) -->
+            <div class="drink-ground-shadow"></div>
+            <div class="drink-caustic-reflection"></div>
           </div>
 
-          <!-- Напиток 2 (Шаблон под второе ваше фото) -->
-          <div class="drink-item-wrap">
-            <div class="drink-card-3d" data-tilt>
-              <div class="drink-glow" style="--glow-color: rgba(197, 160, 89, 0.2);"></div>
-              
-              <div class="drink-visual-stage">
-                <div class="drink-shadow"></div>
-                <div class="drink-image-container">
-                  <div class="drink-placeholder-silhouette">
-                    <span class="drink-ph-title">Напиток #02</span>
-                    <span class="drink-ph-sub">[ Ожидает фото ]</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="drink-info-plate">
-                <div class="drink-meta-top">
-                  <span class="drink-tag">Горячий // Текстурный</span>
-                  <span class="drink-temp">65°C</span>
-                </div>
-                <h3 class="drink-title">Кремовый Рафф «Копченый Саган-Дайля»</h3>
-                <p class="drink-hook">Плотная сливочная текстура с горным хвойным шлейфом и нотами чернослива.</p>
-
-                <div class="flavor-bars">
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Кислотность</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 15%;"></div></div>
-                  </div>
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Сладость</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 70%;"></div></div>
-                  </div>
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Плотность (Body)</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 95%;"></div></div>
-                  </div>
-                  <div class="flavor-bar-row">
-                    <span class="bar-name">Горечь</span>
-                    <div class="bar-track"><div class="bar-fill" style="width: 20%;"></div></div>
-                  </div>
-                </div>
-
-                <div class="drink-details-reveal">
-                  <h4 class="reveal-heading">Анатомия формулы:</h4>
-                  <ul class="drink-ingredients-list">
-                    <li><strong>База:</strong> Плотный эспрессо (Бразилия анаэробная)</li>
-                    <li><strong>Заготовка:</strong> Концентрированная инфузия Саган-Дайля с тростниковым сахаром мусковадо</li>
-                    <li><strong>Эмульсия:</strong> Сливки 10% с добавлением морской соли</li>
-                    <li><strong>Гарниш:</strong> Копченый дубовый дым под стеклянным клошем</li>
-                  </ul>
-                  <div class="chef-quote">
-                    «Текстурный десертный напиток, разрушающий стереотип о приторности рафов благодаря хвойным смолам».
-                  </div>
-                </div>
-              </div>
+          <!-- Паспорт напитка и динамические данные -->
+          <div class="drink-specs-panel">
+            <div class="specs-header">
+              <span class="badge-tech">Formula #01 // Lactic Float</span>
+              <span class="sensor-temp">Подача: 3°C</span>
             </div>
-          </div>
 
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Bottom CTA -->
-    <section class="section-spacing" style="background-color: var(--bg-surface);">
-      <div class="container">
-        <div class="cta-banner">
-          <div>
-            <h2 class="cta-title">Хотите авторскую карту для вашего проекта?</h2>
-            <p class="cta-desc">
-              Разрабатываю концептуальные линейки напитков с технологическими картами, расчетом себестоимости и обучением бариста.
+            <h2 class="drink-heading">Electric Indigo Float</h2>
+            <p class="drink-annotation">
+              Многоуровневая подача с гравитационным каскадом соленой крем-пены сквозь концентрированный экстракт дикой черники и цветов анчана.
             </p>
+
+            <!-- Блок динамического слоя (меняется при движении мыши по высоте) -->
+            <div class="active-layer-indicator">
+              <div class="layer-step-badge" id="layer-badge">Слой 1 / 3 // Верхний горизонт</div>
+              <div class="layer-data">
+                <strong class="layer-title" id="layer-name">Холодная соленая крем-пена (Cold Foam)</strong>
+                <p class="layer-description" id="layer-desc">
+                  Плотная эмульсия сливок 10% и морской соли. Задерживает ароматические эфиры и создает контраст температур при первом глотке.
+                </p>
+              </div>
+            </div>
+
+            <!-- Сенсорный баланс -->
+            <div class="sensory-grid">
+              <div class="sensor-item">
+                <span>Кислотность</span>
+                <div class="meter-bar"><div class="fill" style="width: 30%;"></div></div>
+              </div>
+              <div class="sensor-item">
+                <span>Сладость</span>
+                <div class="meter-bar"><div class="fill" style="width: 65%;"></div></div>
+              </div>
+              <div class="sensor-item">
+                <span>Плотность (Body)</span>
+                <div class="meter-bar"><div class="fill" style="width: 90%;"></div></div>
+              </div>
+              <div class="sensor-item">
+                <span>Горечь</span>
+                <div class="meter-bar"><div class="fill" style="width: 10%;"></div></div>
+              </div>
+            </div>
+
+            <div class="chef-note">
+              <strong>Технологический комментарий:</strong> «Плотная шапка с солевым балансом нейтрализует танинность черники, раскрывая цветочный шлейф клитории без грамма белого сахара».
+            </div>
           </div>
-          <a href="contact.html?service=menu" class="btn btn-primary">Заказать разработку меню</a>
+
         </div>
       </div>
-    </section>
-  </main>
+
+    </div>
+  </section>
+</main>
 
   <!-- Site Footer -->
   <footer class="site-footer">

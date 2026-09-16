@@ -1268,3 +1268,272 @@ h1, h2, h3, h4, .brand-logo {
     grid-template-columns: 1fr;
   }
 }
+/* ==========================================================================
+   Flagship Drink Interactive Showcase (2.5D Engine)
+   ========================================================================== */
+.drink-card-interactive {
+  --glare-x: 50%;
+  --scan-y: 20%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --accent-rgb: 138, 43, 226;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 48px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+  perspective: 1000px;
+}
+
+.drink-ambient-glow {
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.22) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Сцена бокала */
+.drink-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+  cursor: crosshair;
+  z-index: 2;
+}
+
+.drink-glass-wrapper {
+  position: relative;
+  max-height: 430px;
+  user-select: none;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.1s ease-out;
+  transform-style: preserve-3d;
+}
+
+.drink-photo {
+  display: block;
+  max-height: 430px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9));
+  pointer-events: none;
+}
+
+/* Блик по стеклу */
+.glass-specular-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent calc(var(--glare-x) - 15%),
+    rgba(255, 255, 255, 0.3) var(--glare-x),
+    transparent calc(var(--glare-x) + 15%)
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Лазер сканера */
+.scanner-laser-line {
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  top: var(--scan-y);
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.9), #ffffff, rgba(var(--accent-rgb), 0.9), transparent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.9);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.drink-stage:hover .scanner-laser-line {
+  opacity: 1;
+}
+
+/* Тень и каустика */
+.drink-ground-shadow {
+  position: absolute;
+  bottom: 12px;
+  width: 55%;
+  height: 16px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.95) 0%, transparent 75%);
+  filter: blur(6px);
+  z-index: 1;
+}
+
+.drink-caustic-reflection {
+  position: absolute;
+  bottom: 4px;
+  width: 70%;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(var(--accent-rgb), 0.45) 0%, transparent 70%);
+  filter: blur(14px);
+  mix-blend-mode: screen;
+}
+
+/* Информационная панель */
+.drink-specs-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+}
+
+.specs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.badge-tech {
+  font-size: 0.75rem;
+  font-family: monospace;
+  text-transform: uppercase;
+  color: rgb(var(--accent-rgb));
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.sensor-temp {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.drink-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.drink-annotation {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Блок активного анатомического слоя */
+.active-layer-indicator {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid rgb(var(--accent-rgb));
+  padding: 16px 20px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 28px;
+  min-height: 95px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.layer-step-badge {
+  font-size: 0.72rem;
+  color: rgb(var(--accent-rgb));
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.layer-title {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.layer-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Сенсорные шкалы */
+.sensory-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-surface-elevated);
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  margin-bottom: 24px;
+}
+
+.sensor-item {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.meter-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter-bar .fill {
+  height: 100%;
+  background: rgb(var(--accent-rgb));
+  border-radius: 999px;
+}
+
+.chef-note {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+  padding-left: 14px;
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.chef-note strong {
+  font-style: normal;
+  color: var(--text-primary);
+}
+
+/* Fallback для мобильных устройств */
+@media (hover: none) {
+  .glass-specular-glare,
+  .scanner-laser-line {
+    display: none;
+  }
+  .drink-stage {
+    cursor: default;
+  }
+}
+
+@media (max-width: 960px) {
+  .drink-card-interactive {
+    grid-template-columns: 1fr;
+    padding: 28px;
+    gap: 32px;
+  }
+  .drink-stage {
+    min-height: 380px;
+  }
+  .drink-photo {
+    max-height: 350px;
+  }
+}

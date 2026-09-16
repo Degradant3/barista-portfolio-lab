@@ -155,3 +155,79 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+  // ==========================================================================
+// Flagship Drink Interactive Physics & Anatomy Scanner
+// ==========================================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const stage = document.getElementById("drink-stage");
+  const card = document.getElementById("master-drink-card");
+  const badgeEl = document.getElementById("layer-badge");
+  const nameEl = document.getElementById("layer-name");
+  const descEl = document.getElementById("layer-desc");
+
+  if (!stage || !card) return;
+
+  // Конфигурация анатомических слоев (в % от верха бокала)
+  const LAYERS = [
+    {
+      range: [0, 32],
+      badge: "Слой 1 / 3 // Верхний горизонт",
+      name: "Холодная соленая крем-пена (Cold Foam)",
+      desc: "Плотная эмульсия сливок 10% и морской соли. Задерживает ароматические эфиры и создает контраст температур при первом глотке."
+    },
+    {
+      range: [32, 80],
+      badge: "Слой 2 / 3 // Сердце напитка",
+      name: "Каскадный экстракт черники & Цветов анчана",
+      desc: "Холодная ягодная мацерация с танинной кислотностью. Нитевидная диффузия каскада формирует бархатистую текстуру."
+    },
+    {
+      range: [80, 100],
+      badge: "Слой 3 / 3 // Фундамент",
+      name: "Очищенный монолитный лед",
+      desc: "Кристальный лед медленной заморозки без воздушных пор. Обеспечивает термостабильность 3°C при нулевом обводнении."
+    }
+  ];
+
+  // Проверяем, поддерживает ли устройство точный hover
+  const isHoverable = window.matchMedia("(hover: hover)").matches;
+
+  if (isHoverable) {
+    stage.addEventListener("mousemove", (e) => {
+      const rect = stage.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Нормализуем координаты в проценты (0 - 100%)
+      const percentX = Math.max(0, Math.min(100, (x / rect.width) * 100));
+      const percentY = Math.max(0, Math.min(100, (y / rect.height) * 100));
+
+      // Расчет 3D-наклона (до 8 градусов)
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const tiltX = ((y - centerY) / centerY) * -8;
+      const tiltY = ((x - centerX) / centerX) * 8;
+
+      requestAnimationFrame(() => {
+        card.style.setProperty("--glare-x", `${percentX}%`);
+        card.style.setProperty("--scan-y", `${percentY}%`);
+        card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+
+        // Поиск активного слоя по вертикали
+        const active = LAYERS.find((l) => percentY >= l.range[0] && percentY <= l.range[1]);
+        if (active && nameEl.textContent !== active.name) {
+          badgeEl.textContent = active.badge;
+          nameEl.textContent = active.name;
+          descEl.textContent = active.desc;
+        }
+      });
+    });
+
+    stage.addEventListener("mouseleave", () => {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+      card.style.setProperty("--glare-x", "50%");
+    });
+  }
+});
