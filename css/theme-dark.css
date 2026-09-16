@@ -1691,3 +1691,22 @@ h1, h2, h3, h4, .brand-logo {
     font-size: 0.72rem !important;
   }
 }
+/* Принудительная кликабельность мобильного меню */
+header,
+.site-header,
+.navbar {
+  position: relative;
+  z-index: 1000 !important;
+}
+
+.menu-toggle,
+.nav-toggle,
+.burger,
+.hamburger {
+  position: relative;
+  z-index: 1001 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}

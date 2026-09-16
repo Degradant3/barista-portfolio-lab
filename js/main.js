@@ -1,4 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
+// ==========================================================================
+  // Мобильное меню (Burger Toggle)
+  // ==========================================================================
+  const burgerBtn = document.querySelector(".menu-toggle, .nav-toggle, .burger, .hamburger, [data-nav-toggle]");
+  const mobileNav = document.querySelector(".nav-links, .nav-menu, .site-nav, .mobile-menu, nav");
+
+  if (burgerBtn && mobileNav) {
+    burgerBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      burgerBtn.classList.toggle("active");
+      mobileNav.classList.toggle("active");
+      mobileNav.classList.toggle("is-open");
+      document.body.classList.toggle("menu-open");
+    });
+
+    // Закрытие меню при клике на любую ссылку внутри
+    mobileNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        burgerBtn.classList.remove("active");
+        mobileNav.classList.remove("active", "is-open");
+        document.body.classList.remove("menu-open");
+      });
+    });
+  }
   // Mobile Navigation Toggle
   const menuToggle = document.querySelector(".menu-toggle");
   const navLinks = document.querySelector(".nav-links");
